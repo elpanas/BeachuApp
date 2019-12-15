@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.StabPage"               
+             Title="{Binding Source={x:Reference nomestab}, Path=Text}">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS="0, 20, 0, 5"
+            Android ="5">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <StackLayout>
+           <TableView Intent="Form">
+            <TableRoot>
+                <TableSection Title="Info stabilimento">
+                    <EntryCell x:Name="nomestab" Label="Nome:" Placeholder="Nome Stabilmento" />
+                    <EntryCell x:Name="ombrelloni" Label="Nr. Ombrelloni" Keyboard="Numeric" />
+                </TableSection>                                
+                <TableSection Title="Località e Posizione" >
+                        <EntryCell x:Name="localita" Label="Località:" />
+                        <EntryCell x:Name="provincia" Label="Provincia:" />
+                        <SwitchCell Text="Posizione esatta:" On="False" OnChanged="SwitchCell_OnChanged" />
+                    </TableSection>
+                <TableSection Title="Contatti" >
+                        <EntryCell x:Name="telefono" Label="Telefono:" Keyboard="Telephone" />
+                        <EntryCell x:Name="email" Label="E-mail:" Placeholder="esempio@esempio.it" Keyboard="Email" />
+                        <EntryCell x:Name="sitoweb" Label="Sito web" Placeholder="www.esempio.it" Keyboard="Url" />
+                    </TableSection>
+            </TableRoot>
+        </TableView>
+        <Button Text="Salva"
+                Style="{StaticResource buttonStyle}"
+                HorizontalOptions="Center"
+                Clicked="Salva_Clicked"/>
+    </StackLayout>  
+</ContentPage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.RegPage"              
+             Title="Registrazione">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS="0, 20, 0, 5"
+            Android ="5">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <StackLayout>
+        <TableView Intent="Form">
+            <TableRoot>
+                <TableSection Title="Info personali">
+                    <EntryCell x:Name="nome" Label="Nome:" />
+                    <EntryCell x:Name="cognome" Label="Cognome:" />
+                </TableSection>    
+                <TableSection Title="Dati login">
+                    <EntryCell x:Name="username" Label="Username:" />
+                    <EntryCell x:Name="password" Label="Password:" />
+                </TableSection>               
+            </TableRoot>
+        </TableView>
+        <Button Text="Registrati"
+                Style="{StaticResource buttonStyle}"
+                HorizontalOptions="Center"
+                Clicked="Reg_Clicked"/>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.LoginPage"             
+             Title="Login">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS = "0, 20, 0, 5"
+            Android ="5">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <StackLayout>
+        <TableView Intent="Form">
+            <TableRoot>
+                <TableSection>
+                    <EntryCell x:Name="username" Label="Nome Utente:" />
+                    <EntryCell x:Name="password" Label="Password:" />
+                </TableSection>
+            </TableRoot>
+        </TableView>        
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+            <Button Text="Entra" Style="{StaticResource buttonStyle}"
+                    Clicked="ButtonLogin_Clicked" 
+                    HorizontalOptions="Center"/>
+            <Button Text="Registrati"
+                    Style="{StaticResource buttonStyle}"                    
+                    Clicked="Reg_Clicked"/>            
+        </StackLayout>        
+    </StackLayout>
+</ContentPage>

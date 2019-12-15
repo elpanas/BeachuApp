@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             mc:Ignorable="d"
+             x:Class="BeachuApp.StabDispPage"
+             Title="Stabilimenti disponibili">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS="0, 20, 0, 0">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>        
+        <StackLayout>
+            <SearchBar x:Name="search"
+                       Placeholder="Cerca..."
+                       TextChanged="SearchBar_TextChanged"
+                       IsVisible="False" />            
+            <Label x:Name="labelvuota"        
+                   FontSize="Medium"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="CenterAndExpand"
+                   Text="Non sono presenti stabilimenti"
+                   IsVisible="False" />
+            <Label x:Name="localita" HorizontalOptions="CenterAndExpand" IsVisible="False" />
+            <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand"/>
+            <ListView x:Name="listView"                     
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="ListView_Refreshing"
+                      IsVisible="False">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}"
+                                  Detail="{Binding Disponibili}"
+                                  Tapped="Stab_Tapped"
+                                  CommandParameter="{Binding .}">
+                        </TextCell>                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

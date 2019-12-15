@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.ElencoStabPage"             
+             Title="Stabilimenti">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS="0, 20, 0, 0">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="plus.png" Clicked="Aggiungi_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>                       
+            <SearchBar x:Name="search"
+                       Placeholder="Cerca..."
+                       TextChanged="SearchBar_TextChanged"
+                       IsVisible="False"/>
+            <Label x:Name="labelaggiorna"        
+                   FontSize="Medium"
+                   HorizontalOptions="Center"                    
+                   Text="Trascina in basso per aggiornare"
+                   IsVisible="False" /> 
+            <Label x:Name="labelvuota"        
+                   FontSize="Medium"
+                   HorizontalOptions="Center" 
+                   VerticalOptions="CenterAndExpand"
+                   Text="Non sono presenti stabilimenti"
+                   IsVisible="False" />            
+            <ListView x:Name="listView"
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="ListView_Refreshing"
+                      IsVisible="False">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}"
+                                  Detail="{Binding Localita}"
+                                  Tapped="Stab_Tapped"                                   
+                                  CommandParameter="{Binding .}">
+                            <TextCell.ContextActions>   
+                                <MenuItem Text="Modifica"
+                                          Clicked="Modifica_Clicked"                                          
+                                          CommandParameter="{Binding .}"/>
+                                <MenuItem Text="Elimina"
+                                          Clicked="Elimina_Clicked"
+                                          IsDestructive="true"
+                                          CommandParameter="{Binding .}"/>                                
+                            </TextCell.ContextActions>
+                        </TextCell>                        
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.MainPage"
+             BackgroundColor="#127ac7"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness"
+            iOS="0, 20, 0, 5">
+        </OnPlatform>
+    </ContentPage.Padding>
+    <AbsoluteLayout> 
+        <StackLayout HorizontalOptions="Center"   
+                     VerticalOptions="Center"
+                     AbsoluteLayout.LayoutBounds="0.5, 0, 1, 1"
+                     AbsoluteLayout.LayoutFlags="All">            
+            <Image Source="logoapp.png"
+                   Aspect="AspectFit" Scale="0.8" />            
+            <StackLayout Orientation="Horizontal" Padding="0,10,0,20">
+                <Button Text="Cerca vicino a te"
+                        Style="{StaticResource buttonStyle}"
+                        Clicked="Posizione_Clicked" />
+
+                <Button Text="Cerca per località"
+                        Style="{StaticResource buttonStyle}"
+                        Clicked="Localita_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+        <StackLayout 
+                AbsoluteLayout.LayoutBounds="1, 1, 1, 50"
+                AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional">
+            <Button Text="Login gestori" 
+                Style="{StaticResource buttonStyle}"                    
+                Clicked="Login_Clicked"
+                HorizontalOptions="CenterAndExpand"                 
+                BackgroundColor="#0c629e"/>
+        </StackLayout>
+    </AbsoluteLayout>    
+</ContentPage>

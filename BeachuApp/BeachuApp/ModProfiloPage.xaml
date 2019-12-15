@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="BeachuApp.ModProfiloPage"
+             Title="Dati Personali"
+             Padding="5">
+    <ContentPage.Content>
+        <StackLayout>
+            <TableView Intent="Form">
+                <TableRoot>
+                    <TableSection Title="Info generali">
+                        <EntryCell x:Name="nome" Placeholder="Nome" />
+                        <EntryCell x:Name="cognome" Placeholder="Cognome" />
+                    </TableSection>
+                    <TableSection Title="Contatti" >
+                        <EntryCell x:Name="telefono" Placeholder="Telefono:" Keyboard="Telephone" />
+                        <EntryCell x:Name="email" Placeholder="E-mail:" Keyboard="Email" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+            <Button Text="Salva"
+                    Style="{StaticResource buttonStyle}"
+                    HorizontalOptions="Center"
+                    Clicked="Salva_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

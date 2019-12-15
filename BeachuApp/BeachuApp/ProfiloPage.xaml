@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             mc:Ignorable="d"
+             x:Class="BeachuApp.ProfiloPage"
+             NavigationPage.HasBackButton="False"
+             Title="Profilo">
+    <RelativeLayout>
+        <BoxView x:Name="banner"
+                 RelativeLayout.WidthConstraint="{ConstraintExpression
+                                                  Type=RelativeToParent,
+                                                  Property=Width,
+                                                  Factor=1}"
+                 RelativeLayout.HeightConstraint="{ConstraintExpression
+                                                   Type=RelativeToParent,
+                                                   Property=Height,
+                                                   Factor=0.3}" />
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+                     RelativeLayout.WidthConstraint="{ConstraintExpression
+                                                      Type=RelativeToParent,
+                                                      Property=Width,
+                                                      Factor=1}"
+                     RelativeLayout.HeightConstraint="{ConstraintExpression
+                                                       Type=RelativeToParent,
+                                                       Property=Height,
+                                                       Factor=0.3}">       
+            <Label Text="Ciao" 
+                   TextColor="Black"
+                   FontSize="30" 
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>    
+            <Label x:Name="nome"                   
+                   TextColor="Black"
+                   FontSize="20"                   
+                   HorizontalTextAlignment="Center"/> 
+        </StackLayout>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
+                     RelativeLayout.WidthConstraint="{ConstraintExpression
+                                                      Type=RelativeToParent,
+                                                      Property=Width,
+                                                      Factor=1}"
+                     RelativeLayout.YConstraint="{ConstraintExpression
+                                                  Type=RelativeToView,
+                                                  ElementName=banner,
+                                                  Property=Height,
+                                                  Factor=1,
+                                                  Constant=30}"
+                     Orientation="Horizontal">
+            <Button Text="I Tuoi Stabilimenti"
+                    Style="{StaticResource buttonStyle}" 
+                    Clicked="Stabilimenti_Clicked"/>
+            <Button Text="Modifica profilo"
+                    Style="{StaticResource buttonStyle}"
+                    Clicked="Modifica_Clicked"/>
+        </StackLayout>        
+    </RelativeLayout>
+</ContentPage>
