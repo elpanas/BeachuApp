@@ -51,7 +51,7 @@ namespace BeachuApp
                         await DisplayAlert("Errore", "Operazione fallita", "Ok");
                 }
             }
-            catch
+            catch (Exception)
             {
                 await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
             }

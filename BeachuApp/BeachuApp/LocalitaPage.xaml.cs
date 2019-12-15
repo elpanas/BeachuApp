@@ -29,7 +29,7 @@ namespace BeachuApp
                     await Navigation.PushAsync(new StabDispPage());
                 }
             }
-            catch
+            catch (Exception)
             {
                 await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
             }

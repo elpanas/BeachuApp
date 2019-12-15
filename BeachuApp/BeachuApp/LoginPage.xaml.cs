@@ -56,7 +56,7 @@ namespace BeachuApp
                     }
                 }
             }
-            catch
+            catch (Exception)
             {
                 await DisplayAlert("Errore", "Valori non corretti", "Ok");
             }
