@@ -18,8 +18,10 @@ namespace BeachuApp
 
             try
             {
-                if (string.IsNullOrEmpty(localita.Text) || string.IsNullOrEmpty(provincia.Text))
+                if (string.IsNullOrWhiteSpace(localita.Text) || string.IsNullOrWhiteSpace(provincia.Text))
+                {           
                     await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
+                }
                 else
                 {
                     app.Properties["cerca"] = "localita";
@@ -29,9 +31,9 @@ namespace BeachuApp
                     await Navigation.PushAsync(new StabDispPage());
                 }
             }
-            catch (Exception)
+            catch
             {
-                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
+                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili: ", "Ok");
             }
         }
     }

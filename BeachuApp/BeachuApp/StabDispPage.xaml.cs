@@ -37,7 +37,7 @@ namespace BeachuApp
                     parametri["localita"] = app.Properties["localita"].ToString();
                     parametri["provincia"] = app.Properties["provincia"].ToString();
 
-                    localita.Text = app.Properties["localita"].ToString();
+                    localita.Text = app.Properties["localita"].ToString();                   
                 }
                 else if (app.Properties["cerca"].ToString() == "posizione")
                 {

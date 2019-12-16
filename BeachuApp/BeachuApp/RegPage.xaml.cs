@@ -38,9 +38,9 @@ namespace BeachuApp
 
                 if (!response.IsFaulted)
                 {
-                    var esito = JsonConvert.DeserializeObject<int>(response.Result);
+                    var esito = JsonConvert.DeserializeObject<string>(response.Result);
 
-                    if (esito == 1)
+                    if (esito == "1")
                     {
                         await SecureStorage.SetAsync("beachunome", nome.Text);
                         await SecureStorage.SetAsync("beachucognome", cognome.Text);
@@ -48,12 +48,14 @@ namespace BeachuApp
                         await Navigation.PopToRootAsync();
                     }
                     else
+                    {
                         await DisplayAlert("Errore", "Operazione fallita", "Ok");
+                    }
                 }
             }
-            catch (Exception)
+            catch
             {
-                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
+                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili: ", "Ok");
             }
         }
 

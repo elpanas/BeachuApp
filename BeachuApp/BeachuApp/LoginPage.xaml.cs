@@ -24,22 +24,27 @@ namespace BeachuApp
 
         async private void ButtonLogin_Clicked(object sender, EventArgs e)
         {
-            Dictionary<string, string> parametri = new Dictionary<string, string>();
-
             try
             {
-                if (string.IsNullOrEmpty(username.Text) || string.IsNullOrEmpty(password.Text))
+                if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrWhiteSpace(password.Text))
+                {
                     await DisplayAlert("Errore", "Valori non corretti", "Ok");
+                }
                 else
                 {
-                    parametri["username"] = Convert.ToBase64String(Encoding.UTF8.GetBytes(username.Text));
-                    parametri["password"] = Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text));
-                    parametri["azione"] = "login";
+                    Dictionary<string, string> parametri = new Dictionary<string, string>()
+                    {
+                        { "azione", "login" },
+                        { "username", Convert.ToBase64String(Encoding.UTF8.GetBytes(username.Text)) },
+                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) }                        
+                    };
 
                     var response = InviaRichiesta(parametri);
 
                     if (response.IsFaulted)
+                    {
                         await DisplayAlert("Errore", "Errore di connessione", "Ok");
+                    }
                     else
                     {
                         var datiUtente = JsonConvert.DeserializeObject<Utente>(response.Result); // converte json in un oggetto Utente
@@ -52,13 +57,15 @@ namespace BeachuApp
                             await Navigation.PushAsync(new ProfiloPage()); // carica la pagina del profilo
                         }
                         else
+                        {
                             await DisplayAlert("Errore", "Username e/o password errati", "Ok");
+                        }
                     }
                 }
             }
-            catch (Exception)
+            catch
             {
-                await DisplayAlert("Errore", "Valori non corretti", "Ok");
+                await DisplayAlert("Errore", "Valori non corretti: ", "Ok");
             }
         }
 

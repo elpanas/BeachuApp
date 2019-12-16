@@ -27,8 +27,6 @@ namespace BeachuApp
 
             try
             {
-                Dictionary<string, string> parametri = new Dictionary<string, string>();
-
                 nomestab.Text = app.Properties["stabNome"].ToString();
                 ombrelloni.Text = app.Properties["stabOmbrelloni"].ToString();
                 localita.Text = app.Properties["stabLocalita"].ToString();
@@ -129,7 +127,7 @@ namespace BeachuApp
 
             if (!response.IsFaulted)
             {
-                if (JsonConvert.DeserializeObject<int>(response.Result) == 1)
+                if (JsonConvert.DeserializeObject<string>(response.Result) == "1")
                     await DisplayAlert("Congratulazioni!", "Info inserite con successo", "Ok");
                 else
                     await DisplayAlert("Errore", "Operazione non riuscita", "Ok");

@@ -38,6 +38,7 @@
     <AndroidUseAapt2>True</AndroidUseAapt2>
     <MandroidI18n />
     <AndroidSupportedAbis>armeabi-v7a;x86</AndroidSupportedAbis>
+    <AndroidDexTool>d8</AndroidDexTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -61,8 +62,8 @@
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidLinkTool>proguard</AndroidLinkTool>
     <AndroidUseAapt2>true</AndroidUseAapt2>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
