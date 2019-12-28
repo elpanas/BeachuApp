@@ -36,7 +36,7 @@ namespace BeachuApp
                     {
                         { "azione", "login" },
                         { "username", Convert.ToBase64String(Encoding.UTF8.GetBytes(username.Text)) },
-                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) }                        
+                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) }
                     };
 
                     var response = InviaRichiesta(parametri);

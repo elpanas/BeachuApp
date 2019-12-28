@@ -13,13 +13,13 @@ namespace BeachuApp
         }
 
         async private void Cerca_Clicked(object sender, EventArgs e)
-        {          
+        {
             try
             {
                 var app = Application.Current as App;
 
                 if (string.IsNullOrWhiteSpace(localita.Text) || string.IsNullOrWhiteSpace(provincia.Text))
-                {           
+                {
                     await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
                 }
                 else
