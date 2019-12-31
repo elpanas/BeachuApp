@@ -65,6 +65,9 @@
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
   </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>XA5302</MSBuildWarningsAsMessages>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Android.Export" />
@@ -74,7 +77,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors" />       
+    <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
@@ -99,6 +102,7 @@
     <None Include="..\..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <ProguardConfiguration Include="ProGuard.cfg" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
