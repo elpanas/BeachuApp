@@ -63,7 +63,7 @@
     <AndroidLinkTool>proguard</AndroidLinkTool>
     <AndroidUseAapt2>true</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
-    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidPackageFormat>aab</AndroidPackageFormat>
   </PropertyGroup>
   <PropertyGroup>
     <MSBuildWarningsAsMessages>XA5302</MSBuildWarningsAsMessages>
