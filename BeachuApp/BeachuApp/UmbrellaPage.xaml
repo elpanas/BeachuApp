@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.UmbrellaPage"             
              Title="{Binding Source={x:Reference nome}, Path=Text}">
@@ -10,7 +11,7 @@
         <StackLayout VerticalOptions="Center" 
                      HorizontalOptions="Center">
             <Label x:Name="nome" IsVisible="False" />
-            <Label Text="Ombrelloni disponibili"
+            <Label Text="{x:Static resources:AppResources.AvailUmbrellaLabel}"
                    HorizontalTextAlignment="Center"
                    FontSize="18"/>
             <Stepper x:Name="stepper"

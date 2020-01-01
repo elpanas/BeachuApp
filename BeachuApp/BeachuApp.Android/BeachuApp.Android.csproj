@@ -125,7 +125,6 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\BeachuApp\BeachuApp.csproj">
       <Project>{B77F5967-D82A-45B7-AE32-2A6DB1C152BE}</Project>

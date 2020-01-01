@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.ElencoStabPage"             
-             Title="Stabilimenti">
+             Title="{x:Static resources:AppResources.ListBathsTitle}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 0">
@@ -17,19 +18,19 @@
     <ContentPage.Content>
         <StackLayout>                       
             <SearchBar x:Name="search"
-                       Placeholder="Cerca..."
+                       Placeholder="{x:Static resources:AppResources.SearchBar}"
                        TextChanged="SearchBar_TextChanged"
                        IsVisible="False"/>
             <Label x:Name="labelaggiorna"        
                    FontSize="Medium"
                    HorizontalOptions="Center"                    
-                   Text="Trascina in basso per aggiornare"
+                   Text="{x:Static resources:AppResources.ScrollLabel}"
                    IsVisible="False" /> 
             <Label x:Name="labelvuota"        
                    FontSize="Medium"
                    HorizontalOptions="Center" 
                    VerticalOptions="CenterAndExpand"
-                   Text="Non sono presenti stabilimenti"
+                   Text="{x:Static resources:AppResources.NobathLabel}"
                    IsVisible="False" />            
             <ListView x:Name="listView"
                       IsPullToRefreshEnabled="True"
@@ -41,11 +42,11 @@
                                   Detail="{Binding Localita}"
                                   Tapped="Stab_Tapped"                                   
                                   CommandParameter="{Binding .}">
-                            <TextCell.ContextActions>   
-                                <MenuItem Text="Modifica"
+                            <TextCell.ContextActions>
+                                <MenuItem Text="{x:Static resources:AppResources.EditButton}"
                                           Clicked="Modifica_Clicked"                                          
                                           CommandParameter="{Binding .}"/>
-                                <MenuItem Text="Elimina"
+                                <MenuItem Text="{x:Static resources:AppResources.DeleteButton}"
                                           Clicked="Elimina_Clicked"
                                           IsDestructive="true"
                                           CommandParameter="{Binding .}"/>                                

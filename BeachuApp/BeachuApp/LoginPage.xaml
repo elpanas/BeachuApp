@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.LoginPage"             
              Title="Login">
@@ -16,16 +17,16 @@
         <TableView Intent="Form">
             <TableRoot>
                 <TableSection>
-                    <EntryCell x:Name="username" Label="Username:" />
-                    <EntryCell x:Name="password" Label="Password:" />
+                    <EntryCell x:Name="username" Label="{x:Static resources:AppResources.UsernameLabel}" />
+                    <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
                 </TableSection>
             </TableRoot>
         </TableView>        
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button Text="Entra" Style="{StaticResource buttonStyle}"
+            <Button Text="{x:Static resources:AppResources.SigninButton}" Style="{StaticResource buttonStyle}"
                     Clicked="ButtonLogin_Clicked"
                     HorizontalOptions="Center"/>
-            <Button Text="Registrati"
+            <Button Text="{x:Static resources:AppResources.SigniupButton}"
                     Style="{StaticResource buttonStyle}"                    
                     Clicked="Reg_Clicked"/>            
         </StackLayout>        

@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.StabDispPage"
-             Title="Stabilimenti disponibili">
+             Title="{x:Static resources:AppResources.AvailableTitle}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 0">
@@ -14,14 +15,14 @@
     <ContentPage.Content>        
         <StackLayout>
             <SearchBar x:Name="search"
-                       Placeholder="Cerca..."
+                       Placeholder="{x:Static resources:AppResources.SearchBar}"
                        TextChanged="SearchBar_TextChanged"
                        IsVisible="False" />            
             <Label x:Name="labelvuota"        
                    FontSize="Medium"
                    HorizontalOptions="Center" 
                    VerticalOptions="CenterAndExpand"
-                   Text="Non sono presenti stabilimenti"
+                   Text="{x:Static resources:AppResources.NobathLabel}"
                    IsVisible="False" />
             <Label x:Name="localita" HorizontalOptions="CenterAndExpand" IsVisible="False" />
             <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand"/>

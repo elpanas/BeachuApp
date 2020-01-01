@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.StabPageUtente"
-             Title="Info stabilimento">
+             Title="{x:Static resources:AppResources.InfoBathTitle}">
     <RelativeLayout>
         <BoxView BackgroundColor="#f7f7f7" x:Name="banner"
                  RelativeLayout.WidthConstraint="{ConstraintExpression
@@ -49,10 +50,10 @@
                                                   Constant=30}"
                      Orientation="Horizontal">
             <Button x:Name="phone"
-                    Text="Telefona"
+                    Text="{x:Static resources:AppResources.PhoneLabel}"
                     Style="{StaticResource buttonStyle}" 
                     Clicked="Phone_Clicked" IsEnabled="false"/>
-            <Button Text="Apri mappa"
+            <Button Text="{x:Static resources:AppResources.MapLabel}"
                     Style="{StaticResource buttonStyle}"
                     Clicked="Mappa_Clicked"/>            
         </StackLayout>        

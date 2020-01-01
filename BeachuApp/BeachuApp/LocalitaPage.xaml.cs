@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeachuApp.Resx;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +21,7 @@ namespace BeachuApp
 
                 if (string.IsNullOrWhiteSpace(localita.Text) || string.IsNullOrWhiteSpace(provincia.Text))
                 {
-                    await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili", "Ok");
+                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
                 }
                 else
                 {
@@ -33,7 +34,7 @@ namespace BeachuApp
             }
             catch
             {
-                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili: ", "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
     }

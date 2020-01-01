@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -50,19 +51,19 @@ namespace BeachuApp
                 if (!response.IsFaulted)
                 {
                     if (JsonConvert.DeserializeObject<int>(response.Result) == 0)
-                        await DisplayAlert("Errore", "Aggiornamento fallito", "Ok");
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
                     else
                     {
-                        await DisplayAlert("Complimenti", "Aggiornamento effettuato", "Ok");
+                        await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
                         await Navigation.PopAsync();
                     }
                 }
                 else
-                    await DisplayAlert("Errore", "Errore di connessione", "Ok");
+                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
             }
             catch
             {
-                await DisplayAlert("Errore", "Uno o più campi non contengono un valore accettabile", "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
 

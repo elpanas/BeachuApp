@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -40,15 +41,15 @@ namespace BeachuApp
                         nome.Text = stabilimento.Nome;
                         stepper.Maximum = stabilimento.Ombrelloni;
                         stepper.Value = stabilimento.Disponibili;
-                        ombrelloni.Text = "Disponibili: " + stabilimento.Disponibili;
+                        ombrelloni.Text = AppResources.Available + stabilimento.Disponibili;
                     }
                 }
                 else
-                    DisplayAlert("Errore", "Errore di connessione", "Ok");
+                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
             }
             catch
             {
-                DisplayAlert("Errore", "Operazione non riuscita", "Ok");
+                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
             }
         }
 
@@ -66,12 +67,12 @@ namespace BeachuApp
             if (!response.IsFaulted)
             {
                 if (JsonConvert.DeserializeObject<int>(response.Result) == 1)
-                    ombrelloni.Text = "Disponibili: " + stepper.Value;
+                    ombrelloni.Text = AppResources.Available + stepper.Value;
                 else
-                    DisplayAlert("Errore", "Modifica non riuscita", "Ok");
+                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
             }
             else
-                DisplayAlert("Errore", "Errore di connessione", "Ok");
+                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
         }
 
         async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)

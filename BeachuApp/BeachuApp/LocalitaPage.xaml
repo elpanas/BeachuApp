@@ -2,10 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"                  
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.LocalitaPage"             
-             Title="Cerca per località">
+             Title="{x:Static resources:AppResources.SearchPlaceButton}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 5"
@@ -16,12 +17,12 @@
         <TableView Intent="Form">
             <TableRoot>
                 <TableSection>
-                    <EntryCell x:Name="localita" Label="Località:" />
-                    <EntryCell x:Name="provincia" Label="Provincia:" />
+                    <EntryCell x:Name="localita" Label="{x:Static resources:AppResources.PlaceLabel}" />
+                    <EntryCell x:Name="provincia" Label="{x:Static resources:AppResources.ProvinceLabel}" />
                 </TableSection>                
             </TableRoot>
-        </TableView>        
-        <Button Text="Cerca" Style="{StaticResource buttonStyle}"
+        </TableView>
+        <Button Text="{x:Static resources:AppResources.SearchBar}" Style="{StaticResource buttonStyle}"
                 Clicked="Cerca_Clicked" 
                 HorizontalOptions="Center"/>
     </StackLayout>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,7 +63,7 @@ namespace BeachuApp
                             app.Properties["longitudine"] = location.Longitude;
                         }
                         else
-                            throw new Exception("Non è stato possibile recuperare le coordinate");
+                            throw new Exception(AppResources.ErrorCoord);
                     }
                     else
                     {

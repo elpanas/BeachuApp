@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.RegPage"              
-             Title="Registrazione">
+             Title="{x:Static resources:AppResources.SigniupButton}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 5"
@@ -15,17 +16,17 @@
     <StackLayout>
         <TableView Intent="Form">
             <TableRoot>
-                <TableSection Title="Info personali">
-                    <EntryCell x:Name="nome" Label="Nome:" />
-                    <EntryCell x:Name="cognome" Label="Cognome:" />
-                </TableSection>    
-                <TableSection Title="Dati login">
-                    <EntryCell x:Name="username" Label="Username:" />
-                    <EntryCell x:Name="password" Label="Password:" />
+                <TableSection Title="{x:Static resources:AppResources.PersonalTitle}">
+                    <EntryCell x:Name="nome" Label="{x:Static resources:AppResources.NameLabel}" />
+                    <EntryCell x:Name="cognome" Label="{x:Static resources:AppResources.SurnameLabel}" />
+                </TableSection>
+                <TableSection Title="{x:Static resources:AppResources.LoginTitle}">
+                    <EntryCell x:Name="username" Label="{x:Static resources:AppResources.UsernameLabel}" />
+                    <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
                 </TableSection>               
             </TableRoot>
         </TableView>
-        <Button Text="Registrati"
+        <Button Text="{x:Static resources:AppResources.SigniupButton}"
                 Style="{StaticResource buttonStyle}"
                 HorizontalOptions="Center"
                 Clicked="Reg_Clicked"/>

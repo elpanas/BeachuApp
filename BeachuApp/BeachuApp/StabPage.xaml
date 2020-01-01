@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.StabPage"               
              Title="{Binding Source={x:Reference nomestab}, Path=Text}">
@@ -15,23 +16,23 @@
     <StackLayout>
            <TableView Intent="Form">
             <TableRoot>
-                <TableSection Title="Info stabilimento">
-                    <EntryCell x:Name="nomestab" Label="Nome:" Placeholder="Nome Stabilmento" />
-                    <EntryCell x:Name="ombrelloni" Label="Nr. Ombrelloni" Keyboard="Numeric" />
-                </TableSection>                                
-                <TableSection Title="Località e Posizione" >
-                        <EntryCell x:Name="localita" Label="Località:" />
-                        <EntryCell x:Name="provincia" Label="Provincia:" />
-                        <SwitchCell Text="Posizione esatta:" On="False" OnChanged="SwitchCell_OnChanged" />
+                <TableSection Title="{x:Static resources:AppResources.InfoBathTitle}">
+                    <EntryCell x:Name="nomestab" Label="{x:Static resources:AppResources.NameLabel}" Placeholder="{x:Static resources:AppResources.BathNameLabel}" />
+                    <EntryCell x:Name="ombrelloni" Label="{x:Static resources:AppResources.UmbrellaLabel}" Keyboard="Numeric" />
+                </TableSection>
+                <TableSection Title="{x:Static resources:AppResources.PlaceTitle}" >
+                    <EntryCell x:Name="localita" Label="{x:Static resources:AppResources.PlaceLabel}" />
+                    <EntryCell x:Name="provincia" Label="{x:Static resources:AppResources.ProvinceLabel}" />
+                    <SwitchCell Text="{x:Static resources:AppResources.PositionLabel}" On="False" OnChanged="SwitchCell_OnChanged" />
                     </TableSection>
                 <TableSection Title="Contatti" >
-                        <EntryCell x:Name="telefono" Label="Telefono:" Keyboard="Telephone" />
-                        <EntryCell x:Name="email" Label="E-mail:" Placeholder="esempio@esempio.it" Keyboard="Email" />
-                        <EntryCell x:Name="sitoweb" Label="Sito web" Placeholder="www.esempio.it" Keyboard="Url" />
+                    <EntryCell x:Name="telefono" Label="{x:Static resources:AppResources.PhoneLabel}" Keyboard="Telephone" />
+                    <EntryCell x:Name="email" Label="{x:Static resources:AppResources.MailLabel}" Placeholder="{x:Static resources:AppResources.MailSampleLabel}" Keyboard="Email" />
+                    <EntryCell x:Name="sitoweb" Label="{x:Static resources:AppResources.WebSiteLabel}" Placeholder="{x:Static resources:AppResources.WebSiteSampleLabel}" Keyboard="Url" />
                     </TableSection>
             </TableRoot>
         </TableView>
-        <Button Text="Salva"
+        <Button Text="{x:Static resources:AppResources.SaveButton}"
                 Style="{StaticResource buttonStyle}"
                 HorizontalOptions="Center"
                 Clicked="Salva_Clicked"/>

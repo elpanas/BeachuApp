@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -110,10 +111,10 @@ namespace BeachuApp
                 if (JsonConvert.DeserializeObject<int>(response.Result) == 1)
                     _stabilimenti.Remove(stabilimento);
                 else
-                    DisplayAlert("Errore", "Eliminazione non riuscita", "Ok");
+                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
             }
             else
-                DisplayAlert("Errore", "Errore di connessione", "Ok");
+                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
         }
 
         private void ListView_Refreshing(object sender, System.EventArgs e)

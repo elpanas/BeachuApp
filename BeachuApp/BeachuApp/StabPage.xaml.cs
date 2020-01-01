@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -68,19 +69,19 @@ namespace BeachuApp
             }
             catch (FeatureNotSupportedException fnsEx)
             {
-                await DisplayAlert("Errore", "Dispositivo non supportato: " + fnsEx, "Ok"); // Handle not supported on device exception
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorDevice + fnsEx, "Ok"); // Handle not supported on device exception
             }
             catch (FeatureNotEnabledException fneEx)
             {
-                await DisplayAlert("Errore", "GPS non abilitato: " + fneEx, "Ok"); // Handle not enabled on device exception
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorGps + fneEx, "Ok"); // Handle not enabled on device exception
             }
             catch (PermissionException pEx)
             {
-                await DisplayAlert("Errore", "Permessi insufficienti: " + pEx, "Ok"); // Handle permission exception
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorPerm + pEx, "Ok"); // Handle permission exception
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Errore", "Impossibile ottenere la posizione: " + ex, "Ok"); // Unable to get location
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorPosition + ex, "Ok"); // Unable to get location
             }
         }
 
@@ -107,7 +108,7 @@ namespace BeachuApp
             }
             catch
             {
-                await DisplayAlert("Errore", "Uno o più campi non contengono un valore", "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
 
             try
@@ -128,9 +129,9 @@ namespace BeachuApp
             if (!response.IsFaulted)
             {
                 if (JsonConvert.DeserializeObject<string>(response.Result) == "1")
-                    await DisplayAlert("Congratulazioni!", "Info inserite con successo", "Ok");
+                    await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
                 else
-                    await DisplayAlert("Errore", "Operazione non riuscita", "Ok");
+                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
             }
         }
 

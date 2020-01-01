@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -44,18 +45,18 @@ namespace BeachuApp
                     {
                         await SecureStorage.SetAsync("beachunome", nome.Text);
                         await SecureStorage.SetAsync("beachucognome", cognome.Text);
-                        await DisplayAlert("Congratulazioni!", "Ora sei registrato!", "Ok");
+                        await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
                         await Navigation.PopToRootAsync();
                     }
                     else
                     {
-                        await DisplayAlert("Errore", "Operazione fallita", "Ok");
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
                     }
                 }
             }
             catch
             {
-                await DisplayAlert("Errore", "Alcuni campi non contengono valori accettabili: ", "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
 

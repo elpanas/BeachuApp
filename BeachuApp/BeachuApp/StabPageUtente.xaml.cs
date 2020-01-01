@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeachuApp.Resx;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -45,15 +46,15 @@ namespace BeachuApp
             }
             catch (ArgumentNullException anEx)
             {
-                DisplayAlert("Errore", "Inserire un numero: " + anEx, "Ok");
+                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorNr + anEx, "Ok");
             }
             catch (FeatureNotSupportedException ex)
             {
-                DisplayAlert("Errore", "Impossibile effettuare la telefonata: " + ex, "Ok");
+                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorPh + ex, "Ok");
             }
             catch (Exception ex)
             {
-                DisplayAlert("Errore", "Errore: " + ex, "Ok");
+                DisplayAlert(AppResources.ErrorTitle, "Error: " + ex, "Ok");
             }
         }
 

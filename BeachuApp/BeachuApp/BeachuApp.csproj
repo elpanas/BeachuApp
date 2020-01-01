@@ -30,6 +30,11 @@
     <Compile Update="ProfiloPage.xaml.cs">
       <DependentUpon>ProfiloPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Resx\AppResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -50,6 +55,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="RegPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resx\AppResources.resx">
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="StabDispPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

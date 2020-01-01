@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BeachuApp.Resx;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -28,7 +29,7 @@ namespace BeachuApp
             {
                 if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrWhiteSpace(password.Text))
                 {
-                    await DisplayAlert("Errore", "Valori non corretti", "Ok");
+                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
                 }
                 else
                 {
@@ -43,7 +44,7 @@ namespace BeachuApp
 
                     if (response.IsFaulted)
                     {
-                        await DisplayAlert("Errore", "Errore di connessione", "Ok");
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
                     }
                     else
                     {
@@ -58,14 +59,14 @@ namespace BeachuApp
                         }
                         else
                         {
-                            await DisplayAlert("Errore", "Username e/o password errati", "Ok");
+                            await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
                         }
                     }
                 }
             }
             catch
             {
-                await DisplayAlert("Errore", "Valori non corretti: ", "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
 
