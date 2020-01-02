@@ -217,7 +217,7 @@
     <value>Personal info</value>
   </data>
   <data name="PhoneLabel" xml:space="preserve">
-    <value>Phone:</value>
+    <value>Phone</value>
   </data>
   <data name="PlaceLabel" xml:space="preserve">
     <value>Place:</value>
@@ -253,7 +253,7 @@
     <value>Search in a place</value>
   </data>
   <data name="SigninButton" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Login</value>
   </data>
   <data name="SigniupButton" xml:space="preserve">
     <value>Sign Up</value>

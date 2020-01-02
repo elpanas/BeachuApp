@@ -16,7 +16,7 @@ namespace BeachuApp
     public partial class LoginPage : ContentPage
     {
         private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private HttpClient _client = new HttpClient();        
 
         public LoginPage()
         {
@@ -37,7 +37,7 @@ namespace BeachuApp
                     {
                         { "azione", "login" },
                         { "username", Convert.ToBase64String(Encoding.UTF8.GetBytes(username.Text)) },
-                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) }
+                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) },
                     };
 
                     var response = InviaRichiesta(parametri);
@@ -69,9 +69,7 @@ namespace BeachuApp
                 await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
-
-
-
+       
         async private void Reg_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegPage());
@@ -83,6 +81,5 @@ namespace BeachuApp
             var response = _client.PostAsync(Url, new StringContent(datiJson));
             return await response.Result.Content.ReadAsStringAsync();
         }
-
     }
 }

@@ -23,7 +23,7 @@
                 <TableSection Title="{x:Static resources:AppResources.LoginTitle}">
                     <EntryCell x:Name="username" Label="{x:Static resources:AppResources.UsernameLabel}" />
                     <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
-                </TableSection>               
+                </TableSection>                
             </TableRoot>
         </TableView>
         <Button Text="{x:Static resources:AppResources.SigniupButton}"

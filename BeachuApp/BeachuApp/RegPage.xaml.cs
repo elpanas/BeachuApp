@@ -23,9 +23,9 @@ namespace BeachuApp
         }
 
         async private void Reg_Clicked(object sender, EventArgs e)
-        {
+        {           
             try
-            {
+            {  
                 Dictionary<string, string> datipersonali = new Dictionary<string, string>()
                 {
                     { "azione", "inserisciutente" },

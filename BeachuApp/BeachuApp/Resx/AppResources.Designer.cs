@@ -358,7 +358,7 @@ namespace BeachuApp.Resx {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Phone:.
+        ///   Cerca una stringa localizzata simile a Phone.
         /// </summary>
         public static string PhoneLabel {
             get {
@@ -466,7 +466,7 @@ namespace BeachuApp.Resx {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Sign In.
+        ///   Cerca una stringa localizzata simile a Login.
         /// </summary>
         public static string SigninButton {
             get {
