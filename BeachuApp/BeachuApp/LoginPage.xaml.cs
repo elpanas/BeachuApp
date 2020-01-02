@@ -70,6 +70,8 @@ namespace BeachuApp
             }
         }
 
+
+
         async private void Reg_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegPage());
@@ -81,5 +83,6 @@ namespace BeachuApp
             var response = _client.PostAsync(Url, new StringContent(datiJson));
             return await response.Result.Content.ReadAsStringAsync();
         }
+
     }
 }

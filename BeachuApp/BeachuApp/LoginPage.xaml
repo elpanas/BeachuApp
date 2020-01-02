@@ -21,7 +21,7 @@
                     <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
                 </TableSection>
             </TableRoot>
-        </TableView>        
+        </TableView>            
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Button Text="{x:Static resources:AppResources.SigninButton}" Style="{StaticResource buttonStyle}"
                     Clicked="ButtonLogin_Clicked"
