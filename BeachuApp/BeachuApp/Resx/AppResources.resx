@@ -121,7 +121,7 @@
     <value>Available: </value>
   </data>
   <data name="AvailableTitle" xml:space="preserve">
-    <value>Available Bathing Establishments</value>
+    <value>Available Establishments</value>
   </data>
   <data name="AvailUmbrellaLabel" xml:space="preserve">
     <value>Available Umbrellas</value>
@@ -129,8 +129,23 @@
   <data name="BathNameLabel" xml:space="preserve">
     <value>Establishment Name:</value>
   </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Delete Account</value>
+  </data>
+  <data name="ConfirmNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Do you really want to delete your account? This action is irreversible</value>
+  </data>
+  <data name="ConfirmYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="ContactsTitle" xml:space="preserve">
     <value>Contacts</value>
+  </data>
+  <data name="DeleteAccountLabel" xml:space="preserve">
+    <value>Delete Account</value>
   </data>
   <data name="DeleteButton" xml:space="preserve">
     <value>Delete</value>
@@ -255,7 +270,7 @@
   <data name="SigninButton" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="SigniupButton" xml:space="preserve">
+  <data name="SignupButton" xml:space="preserve">
     <value>Sign Up</value>
   </data>
   <data name="SurnameLabel" xml:space="preserve">
@@ -274,6 +289,6 @@
     <value>www.example.com</value>
   </data>
   <data name="YourBathsLabel" xml:space="preserve">
-    <value>Your Bathing Establishments</value>
+    <value>Your Establishments</value>
   </data>
 </root>

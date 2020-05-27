@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,8 +14,7 @@ namespace BeachuApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StabDispPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
         private ObservableCollection<Stabilimento> _stabilimenti;
 
         public StabDispPage()
@@ -28,21 +26,22 @@ namespace BeachuApp
         private async void PopolaListaAsync(string cerca = null)
         {
             var app = Application.Current as App;
-            Dictionary<string, string> parametri = new Dictionary<string, string>();
+            string urlbase = Variabili.UrlStab + "disp/";
+            string url = urlbase;
 
             try
             {
                 if (app.Properties["cerca"].ToString() == "localita")
                 {
-                    parametri["azione"] = "cercalocalita";
-                    parametri["localita"] = app.Properties["localita"].ToString();
-                    parametri["provincia"] = app.Properties["provincia"].ToString();
-
+                    string loc = app.Properties["localita"].ToString();
+                    string prov = app.Properties["provincia"].ToString();
                     localita.Text = app.Properties["localita"].ToString();
+
+                    url = urlbase + "location/" + loc + "/" + prov;
                 }
                 else if (app.Properties["cerca"].ToString() == "posizione")
                 {
-                    parametri["azione"] = "cercaposizione";
+                    string lat, longi;
 
                     if (cerca == null)
                     {
@@ -56,9 +55,8 @@ namespace BeachuApp
 
                         if (location != null)
                         {
-                            parametri["latitudine"] = location.Latitude.ToString();
-                            parametri["longitudine"] = location.Longitude.ToString();
-
+                            lat = location.Latitude.ToString();
+                            longi = location.Longitude.ToString();
                             app.Properties["latitudine"] = location.Latitude;
                             app.Properties["longitudine"] = location.Longitude;
                         }
@@ -67,16 +65,22 @@ namespace BeachuApp
                     }
                     else
                     {
-                        parametri["latitudine"] = app.Properties["latitudine"].ToString();
-                        parametri["longitudine"] = app.Properties["longitudine"].ToString();
+                        lat = app.Properties["latitudine"].ToString();
+                        longi = app.Properties["longitudine"].ToString();
                     }
+
+                    url = urlbase + "coord/" + longi + "/" + lat;
                 }
 
-                var response = InviaRichiesta(parametri);
+                var response = await _client.GetAsync(url);
 
-                if (!response.IsFaulted)
+                loader.IsRunning = false;
+                loader.IsVisible = false;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var stabilimenti = JsonConvert.DeserializeObject<List<Stabilimento>>(response.Result);
+                    string resstring = await response.Content.ReadAsStringAsync();
+                    var stabilimenti = JsonConvert.DeserializeObject<List<Stabilimento>>(resstring);
                     _stabilimenti = new ObservableCollection<Stabilimento>(stabilimenti);
 
                     if (_stabilimenti.Count > 0)
@@ -84,15 +88,19 @@ namespace BeachuApp
                         if (string.IsNullOrWhiteSpace(cerca))
                             listView.ItemsSource = _stabilimenti;
                         else
-                            listView.ItemsSource = _stabilimenti.Where(c => c.Nome.StartsWith(cerca));
+                            listView.ItemsSource = _stabilimenti.Where(c => c.nome.StartsWith(cerca));
 
                         labelvuota.IsVisible = false;
                         listView.IsVisible = true;
                         search.IsVisible = true;
                         localita.IsVisible = true;
-                        loader.IsRunning = false;
-                        loader.IsVisible = false;
                     }
+                }
+                else
+                {
+                    loader.IsRunning = false;
+                    loader.IsVisible = false;
+                    labelvuota.IsVisible = true;
                 }
             }
             catch
@@ -115,13 +123,13 @@ namespace BeachuApp
             var stabilimento = (sender as TextCell).CommandParameter as Stabilimento;
 
             // memorizza i dati per utilizzarli in altre pagine
-            app.Properties["stabId"] = stabilimento.Id;
-            app.Properties["stabNome"] = stabilimento.Nome;
-            app.Properties["stabOmbrelloni"] = stabilimento.Ombrelloni;
-            app.Properties["stabDisponibili"] = stabilimento.Disponibili;
-            app.Properties["stabLatitudine"] = stabilimento.Latitudine;
-            app.Properties["stabLongitudine"] = stabilimento.Longitudine;
-            app.Properties["stabTelefono"] = stabilimento.Telefono;
+            app.Properties["stabId"] = stabilimento._id;
+            app.Properties["stabNome"] = stabilimento.nome;
+            app.Properties["stabOmbrelloni"] = stabilimento.ombrelloni;
+            app.Properties["stabDisponibili"] = stabilimento.disponibili;
+            app.Properties["stabLongitudine"] = stabilimento.location.coordinates[0];
+            app.Properties["stabLatitudine"] = stabilimento.location.coordinates[1];
+            app.Properties["stabTelefono"] = stabilimento.telefono;
 
             await Navigation.PushAsync(new StabPageUtente());
         }
@@ -129,13 +137,6 @@ namespace BeachuApp
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             PopolaListaAsync(e.NewTextValue);
-        }
-
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
-            return await response.Result.Content.ReadAsStringAsync();
         }
     }
 }

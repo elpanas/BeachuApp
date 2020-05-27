@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,8 +14,7 @@ namespace BeachuApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ElencoStabPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
         private ObservableCollection<Stabilimento> _stabilimenti;
 
         public ElencoStabPage()
@@ -28,17 +27,18 @@ namespace BeachuApp
         {
             try
             {
-                Dictionary<string, string> parametri = new Dictionary<string, string>()
-                {
-                    { "azione", "listastabilimenti" },
-                    { "idu", await SecureStorage.GetAsync("beachuid") }
-                };
+                string idu = await SecureStorage.GetAsync("beachuid");
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
 
-                var response = InviaRichiesta(parametri);
+                var response = await _client.GetAsync(Variabili.UrlStab + "gest");
 
-                if (!response.IsFaulted)
+                loader.IsRunning = false;
+                loader.IsVisible = false;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    var stabilimenti = JsonConvert.DeserializeObject<List<Stabilimento>>(response.Result);
+                    var resstring = await response.Content.ReadAsStringAsync();
+                    var stabilimenti = JsonConvert.DeserializeObject<List<Stabilimento>>(resstring);
                     _stabilimenti = new ObservableCollection<Stabilimento>(stabilimenti);
 
                     if (_stabilimenti.Count > 0)
@@ -46,17 +46,22 @@ namespace BeachuApp
                         if (string.IsNullOrWhiteSpace(cerca))
                             listView.ItemsSource = _stabilimenti;
                         else
-                            listView.ItemsSource = _stabilimenti.Where(c => c.Nome.StartsWith(cerca));
+                            listView.ItemsSource = _stabilimenti.Where(c => c.nome.StartsWith(cerca));
 
                         labelaggiorna.IsVisible = true;
-                        labelvuota.IsVisible = false;
                         listView.IsVisible = true;
                         search.IsVisible = true;
                     }
+                    else
+                        labelvuota.IsVisible = true;
                 }
+                else
+                    labelvuota.IsVisible = true;
             }
             catch
             {
+                loader.IsRunning = false;
+                loader.IsVisible = false;
                 labelvuota.IsVisible = true;
             }
         }
@@ -73,15 +78,15 @@ namespace BeachuApp
             try
             {
                 var stabilimento = (sender as MenuItem).CommandParameter as Stabilimento;
-                app.Properties["stabId"] = stabilimento.Id;
-                app.Properties["stabNome"] = stabilimento.Nome;
-                app.Properties["stabLocalita"] = stabilimento.Localita;
-                app.Properties["stabProvincia"] = stabilimento.Provincia;
-                app.Properties["stabOmbrelloni"] = stabilimento.Ombrelloni;
-                app.Properties["stabDisponibili"] = stabilimento.Disponibili;
-                app.Properties["stabTel"] = stabilimento.Telefono;
-                app.Properties["stabMail"] = stabilimento.Email;
-                app.Properties["stabWeb"] = stabilimento.Web;
+                app.Properties["stabId"] = stabilimento._id;
+                app.Properties["stabNome"] = stabilimento.nome;
+                app.Properties["stabLocalita"] = stabilimento.localita;
+                app.Properties["stabProvincia"] = stabilimento.provincia;
+                app.Properties["stabOmbrelloni"] = stabilimento.ombrelloni;
+                app.Properties["stabDisponibili"] = stabilimento.disponibili;
+                app.Properties["stabTel"] = stabilimento.telefono;
+                app.Properties["stabMail"] = stabilimento.email;
+                app.Properties["stabWeb"] = stabilimento.web;
             }
             catch
             {
@@ -93,28 +98,26 @@ namespace BeachuApp
             }
         }
 
-        private void Elimina_Clicked(object sender, System.EventArgs e)
+        async private void Elimina_Clicked(object sender, System.EventArgs e)
         {
             // VERIFICARE SE VENGONO CARICATE TUTTE LE PROPRIETA' DELLA CLASSE O SOLO QUELLE IN XAML
             var stabilimento = (sender as MenuItem).CommandParameter as Stabilimento;
+            string idu = await SecureStorage.GetAsync("beachuid");
 
-            Dictionary<string, string> parametri = new Dictionary<string, string>()
-            {
-                { "ids", stabilimento.Id.ToString() },
-                { "azione", "eliminastabilimento" }
-            };
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
 
-            var response = InviaRichiesta(parametri);
+            loader.IsRunning = true;
+            loader.IsVisible = true;
 
-            if (!response.IsFaulted)
-            {
-                if (JsonConvert.DeserializeObject<int>(response.Result) == 1)
-                    _stabilimenti.Remove(stabilimento);
-                else
-                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
-            }
+            var response = await _client.DeleteAsync(Variabili.UrlStab + stabilimento._id.ToString());
+
+            loader.IsRunning = false;
+            loader.IsVisible = false;
+
+            if (response.IsSuccessStatusCode)
+                _stabilimenti.Remove(stabilimento);
             else
-                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
         }
 
         private void ListView_Refreshing(object sender, System.EventArgs e)
@@ -126,22 +129,13 @@ namespace BeachuApp
         async private void Stab_Tapped(object sender, System.EventArgs e)
         {
             var stabilimento = (sender as TextCell).CommandParameter as Stabilimento;
-
-            Application.Current.Properties["stabId"] = stabilimento.Id;
-
+            Application.Current.Properties["stabId"] = stabilimento._id;
             await Navigation.PushAsync(new UmbrellaPage());
         }
 
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             PopolaListaAsync(e.NewTextValue);
-        }
-
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
-            return await response.Result.Content.ReadAsStringAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 using Foundation;
+using Google.MobileAds;
 using UIKit;
 
 namespace BeachuApp.iOS
@@ -19,10 +20,14 @@ namespace BeachuApp.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            MobileAds.SharedInstance.Start(CompletionHandler);
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }
+
+        private void CompletionHandler(InitializationStatus status) { }
     }
 }

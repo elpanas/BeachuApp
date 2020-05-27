@@ -2,28 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.UmbrellaPage"             
              Title="{Binding Source={x:Reference nome}, Path=Text}">
-    <ContentPage.Content>
+    <ContentPage.Content>        
         <StackLayout VerticalOptions="Center" 
                      HorizontalOptions="Center">
             <Label x:Name="nome" IsVisible="False" />
             <Label Text="{x:Static resources:AppResources.AvailUmbrellaLabel}"
                    HorizontalTextAlignment="Center"
                    FontSize="18"/>
+            <ActivityIndicator x:Name="loader" IsRunning="False" VerticalOptions="CenterAndExpand" Color="DarkBlue" IsVisible="False"/>
             <Stepper x:Name="stepper"
                      ValueChanged="Ombrelloni_ValueChanged"
                      Minimum="0"
-                     HorizontalOptions="CenterAndExpand" />
+                     HorizontalOptions="CenterAndExpand" />            
             <Label x:Name="ombrelloni"
                    FontSize="Title"
                    HorizontalTextAlignment="Center"
                    Text="{Binding Source={x:Reference stepper},
                           Path=Value,
-                          StringFormat='{0:N0}'}" />            
-        </StackLayout>
+                          StringFormat='{0:N0}'}" />
+        </StackLayout>                
     </ContentPage.Content>
 </ContentPage>

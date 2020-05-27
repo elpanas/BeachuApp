@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.LoginPage"             
@@ -13,7 +14,7 @@
             Android ="5">
         </OnPlatform>
     </ContentPage.Padding>
-    <StackLayout>
+    <StackLayout>        
         <TableView Intent="Form">
             <TableRoot>
                 <TableSection>
@@ -21,14 +22,17 @@
                     <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
                 </TableSection>
             </TableRoot>
-        </TableView>            
+        </TableView>
+        <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand" Color="DarkBlue" IsVisible="False"/>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-            <Button Text="{x:Static resources:AppResources.SigninButton}" Style="{StaticResource buttonStyle}"
+            <Button Text="{x:Static resources:AppResources.SigninButton}"
+                    Style="{StaticResource buttonStyle}"
                     Clicked="ButtonLogin_Clicked"
                     HorizontalOptions="Center"/>
-            <Button Text="{x:Static resources:AppResources.SigniupButton}"
+            <Button Text="{x:Static resources:AppResources.SignupButton}"
                     Style="{StaticResource buttonStyle}"                    
                     Clicked="Reg_Clicked"/>            
-        </StackLayout>        
+        </StackLayout>
+        <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
     </StackLayout>
 </ContentPage>

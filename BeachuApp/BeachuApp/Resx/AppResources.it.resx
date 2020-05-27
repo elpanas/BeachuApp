@@ -129,8 +129,23 @@
   <data name="BathNameLabel" xml:space="preserve">
     <value>Nome Stabilimento</value>
   </data>
+  <data name="ConfirmDelete" xml:space="preserve">
+    <value>Eliminazione Account</value>
+  </data>
+  <data name="ConfirmNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ConfirmText" xml:space="preserve">
+    <value>Vuoi davvero eliminare il tuo account? Questa azione è irreversibile</value>
+  </data>
+  <data name="ConfirmYes" xml:space="preserve">
+    <value>Si</value>
+  </data>
   <data name="ContactsTitle" xml:space="preserve">
     <value>Contatti</value>
+  </data>
+  <data name="DeleteAccountLabel" xml:space="preserve">
+    <value>Elimina Account</value>
   </data>
   <data name="DeleteButton" xml:space="preserve">
     <value>Elimina</value>
@@ -255,7 +270,7 @@
   <data name="SigninButton" xml:space="preserve">
     <value>Entra</value>
   </data>
-  <data name="SigniupButton" xml:space="preserve">
+  <data name="SignupButton" xml:space="preserve">
     <value>Registrati</value>
   </data>
   <data name="SurnameLabel" xml:space="preserve">

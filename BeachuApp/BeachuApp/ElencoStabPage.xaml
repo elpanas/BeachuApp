@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.ElencoStabPage"             
@@ -31,15 +32,16 @@
                    HorizontalOptions="Center" 
                    VerticalOptions="CenterAndExpand"
                    Text="{x:Static resources:AppResources.NobathLabel}"
-                   IsVisible="False" />            
+                   IsVisible="False" />
+            <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand" Color="DarkBlue"/>
             <ListView x:Name="listView"
                       IsPullToRefreshEnabled="True"
                       Refreshing="ListView_Refreshing"
                       IsVisible="False">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Nome}"
-                                  Detail="{Binding Localita}"
+                        <TextCell Text="{Binding nome}"
+                                  Detail="{Binding localita}"
                                   Tapped="Stab_Tapped"                                   
                                   CommandParameter="{Binding .}">
                             <TextCell.ContextActions>
@@ -54,7 +56,8 @@
                         </TextCell>                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>            
+            </ListView>
+            <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

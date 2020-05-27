@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.ModProfiloPage"
@@ -13,19 +14,20 @@
             <TableView Intent="Form">
                 <TableRoot>
                     <TableSection Title="{x:Static resources:AppResources.GeneralInfoTitle}">
-                        <EntryCell x:Name="nome" Placeholder="{x:Static resources:AppResources.NameLabel}" />
-                        <EntryCell x:Name="cognome" Placeholder="{x:Static resources:AppResources.SurnameLabel}" />
+                        <EntryCell x:Name="nome" Placeholder="{x:Static resources:AppResources.NameLabel}" IsEnabled="False"/>
+                        <EntryCell x:Name="cognome" Placeholder="{x:Static resources:AppResources.SurnameLabel}" IsEnabled="False" />
                     </TableSection>
-                    <TableSection Title="{x:Static resources:AppResources.ContactsTitle}" >
-                        <EntryCell x:Name="telefono" Placeholder="{x:Static resources:AppResources.PhoneLabel}" Keyboard="Telephone" />
+                    <TableSection Title="{x:Static resources:AppResources.ContactsTitle}" >                        
                         <EntryCell x:Name="email" Placeholder="{x:Static resources:AppResources.MailLabel}" Keyboard="Email" />
                     </TableSection>
                 </TableRoot>
             </TableView>
+            <ActivityIndicator x:Name="loader" IsRunning="False" IsVisible="False" VerticalOptions="CenterAndExpand" Color="DarkBlue"/>
             <Button Text="{x:Static resources:AppResources.SaveButton}"
                     Style="{StaticResource buttonStyle}"
                     HorizontalOptions="Center"
                     Clicked="Salva_Clicked"/>
-        </StackLayout>
+            <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
+        </StackLayout>        
     </ContentPage.Content>
 </ContentPage>

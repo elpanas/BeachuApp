@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,13 +14,12 @@ namespace BeachuApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StabPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         public StabPage()
         {
             InitializeComponent();
-            PopolaPagina();
+            PopolaPagina();            
         }
 
         private void PopolaPagina()
@@ -52,7 +52,7 @@ namespace BeachuApp
             }
         }
 
-        async private void caricaGPS()
+        async private void CaricaGPS()
         {
             var app = Application.Current as App;
 
@@ -87,21 +87,21 @@ namespace BeachuApp
 
         private void SwitchCell_OnChanged(object sender, ToggledEventArgs e)
         {
-            caricaGPS();
+            CaricaGPS();
         }
 
         async private void Salva_Clicked(object sender, EventArgs e)
         {
             var app = Application.Current as App;
             Dictionary<string, string> parametri = new Dictionary<string, string>();
+
             try
             {
-                parametri["azione"] = "inseriscistabilimento";
-                parametri["idu"] = await SecureStorage.GetAsync("beachuid");
                 parametri["nome"] = nomestab.Text;
-                parametri["ombrelloni"] = ombrelloni.Text;
                 parametri["localita"] = localita.Text;
                 parametri["provincia"] = provincia.Text;
+                parametri["ombrelloni"] = ombrelloni.Text;
+                parametri["idu"] = await SecureStorage.GetAsync("beachuid");
                 parametri["telefono"] = telefono.Text;
                 parametri["mail"] = email.Text;
                 parametri["web"] = sitoweb.Text;
@@ -124,24 +124,45 @@ namespace BeachuApp
                 // niente
             }
 
-            var response = InviaRichiesta(parametri);
+            HttpResponseMessage response;
 
-            if (!response.IsFaulted)
+            string idu = await SecureStorage.GetAsync("beachuid");
+
+            loader.IsRunning = true;
+            loader.IsVisible = true;
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
+
+            try
             {
-                if (JsonConvert.DeserializeObject<string>(response.Result) == "1")
-                    await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
-                else
-                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
+                response = await _client.PutAsync(Variabili.UrlStab + app.Properties["stabId"],
+                                                  new StringContent(JsonConvert.SerializeObject(parametri),
+                                                  Encoding.UTF8,
+                                                  "application/json"));
             }
-        }
+            catch
+            {
+                response = await _client.PostAsync(Variabili.UrlStab,
+                                                   new StringContent(JsonConvert.SerializeObject(parametri),
+                                                   Encoding.UTF8,
+                                                   "application/json"));
+            }
 
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
+            loader.IsRunning = false;
+            loader.IsVisible = false;
 
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
 
-            return await response.Result.Content.ReadAsStringAsync();
+                // elimino la pagina precedente...
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]);
+
+                // ... in modo da eliminare questa e saltare a ProfiloPage, liberando lo stack
+                await Navigation.PopAsync();
+            }
+            else
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
         }
     }
 }

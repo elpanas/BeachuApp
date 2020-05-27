@@ -241,10 +241,10 @@
                                         Condition="'$(_SGenDllCreated)'=='true'">
         <Destination>$(_SGenDllName)</Destination>
       </_DotfuscatorXamarinOriginalFiles>
-      <_DotfuscatorXamarinOriginalFiles Include="@(_DebugSymbolsIntermediatePath)"
+      <!-- <_DotfuscatorXamarinOriginalFiles Include="@(_DebugSymbolsIntermediatePath)"
                                         Condition="'$(_DebugSymbolsProduced)'=='true' and '$(SkipCopyingSymbolsToOutputDirectory)' != 'true' and '$(CopyOutputSymbolsToOutputDirectory)'=='true'">
         <Destination>%(_DebugSymbolsIntermediatePath.Filename)%(_DebugSymbolsIntermediatePath.Extension)</Destination>
-      </_DotfuscatorXamarinOriginalFiles>
+      </_DotfuscatorXamarinOriginalFiles> -->
       <!-- Don't bother mimicing XML documentation file copy. -->
       <_DotfuscatorXamarinOriginalFiles Include="@(IntermediateSatelliteAssembliesWithTargetPath)"
                                         Condition="'@(IntermediateSatelliteAssembliesWithTargetPath)' != ''">

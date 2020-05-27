@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.StabPage"               
@@ -14,27 +15,29 @@
         </OnPlatform>
     </ContentPage.Padding>
     <StackLayout>
-           <TableView Intent="Form">
+        <ActivityIndicator x:Name="loader" IsRunning="False" IsVisible="False" VerticalOptions="CenterAndExpand" Color="DarkBlue"/>
+           <TableView Intent="Settings">
             <TableRoot>
                 <TableSection Title="{x:Static resources:AppResources.InfoBathTitle}">
                     <EntryCell x:Name="nomestab" Label="{x:Static resources:AppResources.NameLabel}" Placeholder="{x:Static resources:AppResources.BathNameLabel}" />
                     <EntryCell x:Name="ombrelloni" Label="{x:Static resources:AppResources.UmbrellaLabel}" Keyboard="Numeric" />
                 </TableSection>
-                <TableSection Title="{x:Static resources:AppResources.PlaceTitle}" >
+                <TableSection Title="{x:Static resources:AppResources.PlaceTitle}">
                     <EntryCell x:Name="localita" Label="{x:Static resources:AppResources.PlaceLabel}" />
                     <EntryCell x:Name="provincia" Label="{x:Static resources:AppResources.ProvinceLabel}" />
                     <SwitchCell Text="{x:Static resources:AppResources.PositionLabel}" On="False" OnChanged="SwitchCell_OnChanged" />
-                    </TableSection>
-                <TableSection Title="Contatti" >
+                </TableSection>
+                <TableSection Title="{x:Static resources:AppResources.ContactsTitle}">
                     <EntryCell x:Name="telefono" Label="{x:Static resources:AppResources.PhoneLabel}" Keyboard="Telephone" />
                     <EntryCell x:Name="email" Label="{x:Static resources:AppResources.MailLabel}" Placeholder="{x:Static resources:AppResources.MailSampleLabel}" Keyboard="Email" />
                     <EntryCell x:Name="sitoweb" Label="{x:Static resources:AppResources.WebSiteLabel}" Placeholder="{x:Static resources:AppResources.WebSiteSampleLabel}" Keyboard="Url" />
-                    </TableSection>
+                </TableSection>
             </TableRoot>
         </TableView>
         <Button Text="{x:Static resources:AppResources.SaveButton}"
                 Style="{StaticResource buttonStyle}"
                 HorizontalOptions="Center"
                 Clicked="Salva_Clicked"/>
+        <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
     </StackLayout>  
 </ContentPage>

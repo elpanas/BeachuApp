@@ -1,17 +1,25 @@
-﻿namespace BeachuApp
+﻿using System.Collections.Generic;
+
+namespace BeachuApp
 {
-    class Stabilimento
+    public class GeoLocation
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Localita { get; set; }
-        public string Provincia { get; set; }
-        public int Ombrelloni { get; set; }
-        public int Disponibili { get; set; }
-        public float Latitudine { get; set; }
-        public float Longitudine { get; set; }
-        public string Telefono { get; set; }
-        public string Email { get; set; }
-        public string Web { get; set; }
+        public string type { get; set; }
+        public List<float> coordinates { get; set; }
+    }
+
+    public class Stabilimento
+    {
+        public string _id { get; set; }
+        public string nome { get; set; }
+        public string localita { get; set; }
+        public string provincia { get; set; }
+        public GeoLocation location { get; set; }
+        public int ombrelloni { get; set; }
+        public int disponibili { get; set; }
+        public string idutente { get; set; }
+        public string telefono { get; set; }
+        public string email { get; set; }
+        public string web { get; set; }
     }
 }

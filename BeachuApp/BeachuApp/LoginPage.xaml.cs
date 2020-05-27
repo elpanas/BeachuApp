@@ -1,10 +1,9 @@
 ﻿using BeachuApp.Resx;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,8 +14,7 @@ namespace BeachuApp
 
     public partial class LoginPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();        
+        private readonly HttpClient _client = new HttpClient();
 
         public LoginPage()
         {
@@ -28,58 +26,43 @@ namespace BeachuApp
             try
             {
                 if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrWhiteSpace(password.Text))
-                {
                     await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
-                }
                 else
                 {
-                    Dictionary<string, string> parametri = new Dictionary<string, string>()
-                    {
-                        { "azione", "login" },
-                        { "username", Convert.ToBase64String(Encoding.UTF8.GetBytes(username.Text)) },
-                        { "password", Convert.ToBase64String(Encoding.UTF8.GetBytes(password.Text)) },
-                    };
+                    var authData = string.Format("{0}:{1}", username.Text, password.Text);
+                    var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
 
-                    var response = InviaRichiesta(parametri);
+                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
 
-                    if (response.IsFaulted)
+                    loader.IsVisible = true;
+
+                    var response = await _client.GetAsync(Variabili.UrlUser + "login");
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
+                        var resstring = await response.Content.ReadAsStringAsync();
+                        var idu = JsonConvert.DeserializeObject(resstring).ToString();
+                        await SecureStorage.SetAsync("beachuid", idu);
+                        await SecureStorage.SetAsync("beachusername", username.Text);
+                        await Navigation.PushAsync(new ProfiloPage()); // carica la pagina del profilo                        
                     }
                     else
                     {
-                        var datiUtente = JsonConvert.DeserializeObject<Utente>(response.Result); // converte json in un oggetto Utente
-
-                        if (datiUtente.Id > 0)
-                        {
-                            await SecureStorage.SetAsync("beachuid", datiUtente.Id.ToString());
-                            await SecureStorage.SetAsync("beachuusername", username.Text);
-
-                            await Navigation.PushAsync(new ProfiloPage()); // carica la pagina del profilo
-                        }
-                        else
-                        {
-                            await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
-                        }
+                        loader.IsVisible = false;
+                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
                     }
                 }
             }
             catch
             {
+                loader.IsVisible = false;
                 await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
         }
-       
+
         async private void Reg_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegPage());
-        }
-
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
-            return await response.Result.Content.ReadAsStringAsync();
         }
     }
 }

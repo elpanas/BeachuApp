@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,8 +14,7 @@ namespace BeachuApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ModProfiloPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         public ModProfiloPage()
         {
@@ -26,7 +26,6 @@ namespace BeachuApp
         {
             nome.Text = await SecureStorage.GetAsync("beachunome");
             cognome.Text = await SecureStorage.GetAsync("beachucognome");
-            telefono.Text = await SecureStorage.GetAsync("beachutel");
             email.Text = await SecureStorage.GetAsync("beachumail");
         }
 
@@ -34,29 +33,31 @@ namespace BeachuApp
         {
             try
             {
-                var beachuid = await SecureStorage.GetAsync("beachuid");
+                var idu = await SecureStorage.GetAsync("beachuid");
 
                 Dictionary<string, string> parametri = new Dictionary<string, string>()
                 {
-                    { "id", beachuid },
-                    { "nome", nome.Text },
-                    { "cognome", cognome.Text },
-                    { "telefono", telefono.Text },
-                    { "mail", email.Text },
-                    { "azione", "aggiornautente" }
+                    { "email", email.Text }
                 };
 
-                var response = InviaRichiesta(parametri);
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
 
-                if (!response.IsFaulted)
+                loader.IsRunning = true;
+                loader.IsVisible = true;
+
+                var response = await _client.PutAsync(Variabili.UrlUser + idu,
+                                                      new StringContent(JsonConvert.SerializeObject(parametri),
+                                                      Encoding.UTF8,
+                                                      "application/json"));
+
+                loader.IsRunning = false;
+                loader.IsVisible = false;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    if (JsonConvert.DeserializeObject<int>(response.Result) == 0)
-                        await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
-                    else
-                    {
-                        await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
-                        await Navigation.PopAsync();
-                    }
+                    await SecureStorage.SetAsync("beachumail", email.Text);
+                    await DisplayAlert(AppResources.MsgTitle, AppResources.MsgOperation, "Ok");
+                    await Navigation.PopAsync();
                 }
                 else
                     await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
@@ -65,13 +66,6 @@ namespace BeachuApp
             {
                 await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorValues, "Ok");
             }
-        }
-
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
-            return await response.Result.Content.ReadAsStringAsync();
         }
     }
 }

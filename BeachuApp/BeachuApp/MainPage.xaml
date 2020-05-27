@@ -4,16 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"     
              xmlns:resources="clr-namespace:BeachuApp.Resx"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              mc:Ignorable="d"
              x:Class="BeachuApp.MainPage"
-             BackgroundColor="#127ac7"
+             BackgroundColor="#dff1fd"
              NavigationPage.HasNavigationBar="false">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 5">
         </OnPlatform>
     </ContentPage.Padding>
-    <AbsoluteLayout> 
+    <AbsoluteLayout>
+        <controls:MTAdView Grid.Row="1" x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
         <StackLayout HorizontalOptions="Center"   
                      VerticalOptions="Center"
                      AbsoluteLayout.LayoutBounds="0.5, 0, 1, 1"
@@ -37,7 +39,7 @@
                 Style="{StaticResource buttonStyle}"                    
                 Clicked="Login_Clicked"
                 HorizontalOptions="CenterAndExpand"                 
-                BackgroundColor="#0c629e"/>
-        </StackLayout>
+                BackgroundColor="#0c629e" />   
+        </StackLayout>        
     </AbsoluteLayout>    
 </ContentPage>

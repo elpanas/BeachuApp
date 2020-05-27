@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
              xmlns:resources="clr-namespace:BeachuApp.Resx"
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              mc:Ignorable="d"
              x:Class="BeachuApp.StabDispPage"
              Title="{x:Static resources:AppResources.AvailableTitle}">
@@ -25,21 +26,22 @@
                    Text="{x:Static resources:AppResources.NobathLabel}"
                    IsVisible="False" />
             <Label x:Name="localita" HorizontalOptions="CenterAndExpand" IsVisible="False" />
-            <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand"/>
+            <ActivityIndicator x:Name="loader" IsRunning="true" VerticalOptions="CenterAndExpand" Color="DarkBlue"/>
             <ListView x:Name="listView"                     
                       IsPullToRefreshEnabled="True"
                       Refreshing="ListView_Refreshing"
                       IsVisible="False">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Nome}"
-                                  Detail="{Binding Disponibili}"
+                        <TextCell Text="{Binding nome}"
+                                  Detail="{Binding disponibili}"
                                   Tapped="Stab_Tapped"
                                   CommandParameter="{Binding .}">
                         </TextCell>                        
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+            <controls:MTAdView Grid.Row="1" x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
+        </StackLayout> 
     </ContentPage.Content>
 </ContentPage>

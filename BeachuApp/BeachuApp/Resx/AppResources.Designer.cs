@@ -70,7 +70,7 @@ namespace BeachuApp.Resx {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Available Bathing Establishments.
+        ///   Cerca una stringa localizzata simile a Available Establishments.
         /// </summary>
         public static string AvailableTitle {
             get {
@@ -97,11 +97,56 @@ namespace BeachuApp.Resx {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Delete Account.
+        /// </summary>
+        public static string ConfirmDelete {
+            get {
+                return ResourceManager.GetString("ConfirmDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a No.
+        /// </summary>
+        public static string ConfirmNo {
+            get {
+                return ResourceManager.GetString("ConfirmNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Do you really want to delete your account? This action is irreversible.
+        /// </summary>
+        public static string ConfirmText {
+            get {
+                return ResourceManager.GetString("ConfirmText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Yes.
+        /// </summary>
+        public static string ConfirmYes {
+            get {
+                return ResourceManager.GetString("ConfirmYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Contacts.
         /// </summary>
         public static string ContactsTitle {
             get {
                 return ResourceManager.GetString("ContactsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Delete Account.
+        /// </summary>
+        public static string DeleteAccountLabel {
+            get {
+                return ResourceManager.GetString("DeleteAccountLabel", resourceCulture);
             }
         }
         
@@ -477,9 +522,9 @@ namespace BeachuApp.Resx {
         /// <summary>
         ///   Cerca una stringa localizzata simile a Sign Up.
         /// </summary>
-        public static string SigniupButton {
+        public static string SignupButton {
             get {
-                return ResourceManager.GetString("SigniupButton", resourceCulture);
+                return ResourceManager.GetString("SignupButton", resourceCulture);
             }
         }
         
@@ -529,7 +574,7 @@ namespace BeachuApp.Resx {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Your Bathing Establishments.
+        ///   Cerca una stringa localizzata simile a Your Establishments.
         /// </summary>
         public static string YourBathsLabel {
             get {

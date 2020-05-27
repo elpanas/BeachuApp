@@ -2,13 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"       
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.ProfiloPage"
              NavigationPage.HasBackButton="False"
              Title="{x:Static resources:AppResources.ProfileTitle}">
-    <RelativeLayout>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="trash.png" Clicked="Elimina_Clicked" IsDestructive="True" />
+    </ContentPage.ToolbarItems>
+    <RelativeLayout>        
         <BoxView x:Name="banner"
                  RelativeLayout.WidthConstraint="{ConstraintExpression
                                                   Type=RelativeToParent,
@@ -17,7 +21,7 @@
                  RelativeLayout.HeightConstraint="{ConstraintExpression
                                                    Type=RelativeToParent,
                                                    Property=Height,
-                                                   Factor=0.3}" />
+                                                   Factor=0.3}" />        
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
                      RelativeLayout.WidthConstraint="{ConstraintExpression
                                                       Type=RelativeToParent,
@@ -35,8 +39,8 @@
             <Label x:Name="nome"                   
                    TextColor="Black"
                    FontSize="20"                   
-                   HorizontalTextAlignment="Center"/> 
-        </StackLayout>
+                   HorizontalTextAlignment="Center"/>             
+        </StackLayout>        
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center"
                      RelativeLayout.WidthConstraint="{ConstraintExpression
                                                       Type=RelativeToParent,
@@ -54,7 +58,8 @@
                     Clicked="Stabilimenti_Clicked"/>
             <Button Text="{x:Static resources:AppResources.EditProfileLabel}"
                     Style="{StaticResource buttonStyle}"
-                    Clicked="Modifica_Clicked"/>
+                    Clicked="Modifica_Clicked"/>   
         </StackLayout>        
+        <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
     </RelativeLayout>
 </ContentPage>

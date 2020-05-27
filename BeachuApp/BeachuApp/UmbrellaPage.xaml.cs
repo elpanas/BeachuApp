@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,8 +13,7 @@ namespace BeachuApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UmbrellaPage : ContentPage
     {
-        private const string Url = "https://beachug.herokuapp.com";
-        private HttpClient _client = new HttpClient();
+        private readonly HttpClient _client = new HttpClient();
 
         public UmbrellaPage()
         {
@@ -20,66 +21,60 @@ namespace BeachuApp
             InitStabilimento();
         }
 
-        private void InitStabilimento()
+        async private void InitStabilimento()
         {
             try
             {
-                Dictionary<string, string> parametri = new Dictionary<string, string>()
+                loader.IsRunning = true;
+                loader.IsVisible = true;
+
+                string idu = await SecureStorage.GetAsync("beachuid");
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
+
+                var response = await _client.GetAsync(Variabili.UrlStab + Application.Current.Properties["stabId"]);
+
+                loader.IsRunning = false;
+                loader.IsVisible = false;
+
+                if (response.IsSuccessStatusCode)
                 {
-                    { "azione", "estraestabilimento" },
-                    { "ids", Application.Current.Properties["stabId"].ToString() }
-                };
+                    var resstring = await response.Content.ReadAsStringAsync();
+                    var stabilimento = JsonConvert.DeserializeObject<List<Stabilimento>>(resstring);
 
-                var response = InviaRichiesta(parametri);
-
-                if (!response.IsFaulted)
-                {
-                    var stabilimento = JsonConvert.DeserializeObject<Stabilimento>(response.Result);
-
-                    if (stabilimento.Id > 0)
-                    {
-                        nome.Text = stabilimento.Nome;
-                        stepper.Maximum = stabilimento.Ombrelloni;
-                        stepper.Value = stabilimento.Disponibili;
-                        ombrelloni.Text = AppResources.Available + stabilimento.Disponibili;
-                    }
+                    nome.Text = stabilimento[0].nome;
+                    stepper.Maximum = stabilimento[0].ombrelloni;
+                    stepper.Value = stabilimento[0].disponibili;
+                    ombrelloni.Text = AppResources.Available + stabilimento[0].disponibili;
                 }
                 else
-                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
+                    await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
             }
             catch
             {
-                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
             }
         }
 
-        private void Ombrelloni_ValueChanged(object sender, ValueChangedEventArgs e)
+        async private void Ombrelloni_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             Dictionary<string, string> parametri = new Dictionary<string, string>()
             {
-                { "azione", "aggiornaombrelloni" },
                 { "ids", Application.Current.Properties["stabId"].ToString() },
                 { "ombrelloni", e.NewValue.ToString() }
             };
 
-            var response = InviaRichiesta(parametri);
+            string idu = await SecureStorage.GetAsync("beachuid");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Funzioni.CodificaId(idu));
 
-            if (!response.IsFaulted)
-            {
-                if (JsonConvert.DeserializeObject<int>(response.Result) == 1)
-                    ombrelloni.Text = AppResources.Available + stepper.Value;
-                else
-                    DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
-            }
+            var response = await _client.PutAsync(Variabili.UrlStab + "disp",
+                                                  new StringContent(JsonConvert.SerializeObject(parametri),
+                                                  Encoding.UTF8,
+                                                  "application/json"));
+
+            if (response.IsSuccessStatusCode)
+                ombrelloni.Text = AppResources.Available + stepper.Value;
             else
-                DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorConn, "Ok");
-        }
-
-        async private Task<string> InviaRichiesta(Dictionary<string, string> parametri)
-        {
-            string datiJson = JsonConvert.SerializeObject(parametri);
-            var response = _client.PostAsync(Url, new StringContent(datiJson));
-            return await response.Result.Content.ReadAsStringAsync();
+                await DisplayAlert(AppResources.ErrorTitle, AppResources.ErrorOperation, "Ok");
         }
     }
 }

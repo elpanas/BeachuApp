@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"           
+             xmlns:controls="clr-namespace:MarcTron.Plugin.Controls;assembly=Plugin.MtAdmob"
              xmlns:resources="clr-namespace:BeachuApp.Resx"
              mc:Ignorable="d"
              x:Class="BeachuApp.RegPage"              
-             Title="{x:Static resources:AppResources.SigniupButton}">
+             Title="{x:Static resources:AppResources.SignupButton}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 5"
@@ -14,21 +15,28 @@
         </OnPlatform>
     </ContentPage.Padding>
     <StackLayout>
-        <TableView Intent="Form">
-            <TableRoot>
-                <TableSection Title="{x:Static resources:AppResources.PersonalTitle}">
-                    <EntryCell x:Name="nome" Label="{x:Static resources:AppResources.NameLabel}" />
-                    <EntryCell x:Name="cognome" Label="{x:Static resources:AppResources.SurnameLabel}" />
-                </TableSection>
-                <TableSection Title="{x:Static resources:AppResources.LoginTitle}">
-                    <EntryCell x:Name="username" Label="{x:Static resources:AppResources.UsernameLabel}" />
-                    <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
-                </TableSection>                
-            </TableRoot>
-        </TableView>
-        <Button Text="{x:Static resources:AppResources.SigniupButton}"
+        <ScrollView>
+            <TableView Intent="Form">
+                <TableRoot>
+                    <TableSection Title="{x:Static resources:AppResources.PersonalTitle}">
+                        <EntryCell x:Name="nome" Label="{x:Static resources:AppResources.NameLabel}" />
+                        <EntryCell x:Name="cognome" Label="{x:Static resources:AppResources.SurnameLabel}" />
+                    </TableSection>
+                    <TableSection Title="{x:Static resources:AppResources.ContactsTitle}">
+                        <EntryCell x:Name="email" Label="{x:Static resources:AppResources.MailLabel}" />
+                    </TableSection>
+                    <TableSection Title="{x:Static resources:AppResources.LoginTitle}">
+                        <EntryCell x:Name="username" Label="{x:Static resources:AppResources.UsernameLabel}" />
+                        <EntryCell x:Name="password" Label="{x:Static resources:AppResources.PswLabel}" />
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+        </ScrollView>
+        <ActivityIndicator x:Name="loader" IsRunning="False" IsVisible="False" VerticalOptions="CenterAndExpand" Color="DarkBlue"/>
+        <Button Text="{x:Static resources:AppResources.SignupButton}"
                 Style="{StaticResource buttonStyle}"
                 HorizontalOptions="Center"
                 Clicked="Reg_Clicked"/>
+        <controls:MTAdView x:Name="MyAds" AdsId="ca-app-pub-3222066178801146/2985857815"/>
     </StackLayout>
 </ContentPage>
